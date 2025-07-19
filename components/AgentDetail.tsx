@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { AgentDetailProps } from "../types";
+import { AgentDetailProps } from "../lib/types";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import axios from "axios";
+import theme from "../lib/utils/theme";
 
 const AgentDetail: React.FC<AgentDetailProps> = ({ agent }) => {
   const [showRawConfig, setShowRawConfig] = useState<boolean>(false);

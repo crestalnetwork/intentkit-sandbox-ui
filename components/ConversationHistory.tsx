@@ -4,7 +4,7 @@ import {
   GenerationsListResponse,
   ConversationProject,
   ConversationMessage,
-} from "../types";
+} from "../lib/types";
 
 interface ConversationHistoryProps {
   baseUrl: string;
@@ -178,37 +178,38 @@ const ConversationHistory: React.FC<ConversationHistoryProps> = ({
                   </button>
                 </div>
 
-                {expandedProject === project.project_id && (
-                  <div className="mt-3 pt-3 border-t border-[#30363d]">
-                    <div className="space-y-2 max-h-40 overflow-y-auto">
-                      {project.conversation_history
-                        .slice(0, 6)
-                        .map((message, idx) => (
-                          <div key={idx} className="text-xs">
-                            <span
-                              className={`font-medium ${
-                                message.role === "user"
-                                  ? "text-[#58a6ff]"
-                                  : "text-[#85e89d]"
-                              }`}
-                            >
-                              {message.role === "user" ? "You" : "Assistant"}:
-                            </span>
-                            <span className="text-[#c9d1d9] ml-2">
-                              {message.content.slice(0, 100)}
-                              {message.content.length > 100 ? "..." : ""}
-                            </span>
+                {expandedProject === project.project_id &&
+                  project.conversation_history && (
+                    <div className="mt-3 pt-3 border-t border-[#30363d]">
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {project.conversation_history
+                          .slice(0, 6)
+                          .map((message, idx) => (
+                            <div key={idx} className="text-xs">
+                              <span
+                                className={`font-medium ${
+                                  message.role === "user"
+                                    ? "text-[#58a6ff]"
+                                    : "text-[#85e89d]"
+                                }`}
+                              >
+                                {message.role === "user" ? "You" : "Assistant"}:
+                              </span>
+                              <span className="text-[#c9d1d9] ml-2">
+                                {message.content.slice(0, 100)}
+                                {message.content.length > 100 ? "..." : ""}
+                              </span>
+                            </div>
+                          ))}
+                        {project.conversation_history.length > 6 && (
+                          <div className="text-xs text-[#8b949e] italic">
+                            ... {project.conversation_history.length - 6} more
+                            messages
                           </div>
-                        ))}
-                      {project.conversation_history.length > 6 && (
-                        <div className="text-xs text-[#8b949e] italic">
-                          ... {project.conversation_history.length - 6} more
-                          messages
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             ))}
           </div>
